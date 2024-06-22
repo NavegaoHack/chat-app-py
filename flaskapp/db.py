@@ -3,17 +3,15 @@ import sqlite3
 import click
 from flask import current_app, g
 
-
+# Stol EHEM copied from flask tutorial guide
 def get_db():
     if 'db' not in g:
-        g.db = sqlite3.connect("instance/database.sqlite3",
+        g.db = sqlite3.connect(current_app.config['DATABASE'],
             detect_types=sqlite3.PARSE_DECLTYPES
         )
         g.db.row_factory = sqlite3.Row
 
     return g.db
-
-
 
 
 def close_db(e=None):

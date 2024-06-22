@@ -1,60 +1,40 @@
 import os
 from flask import Flask, request,jsonify, render_template
-from . import db
-from . import sqlscripts
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit 
+
+socket = SocketIO()
+
+def create_app(test_config=None):
+    #configuring the app
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_mapping(
+        SECRET_KEY='dev',
+        DATABASE=os.path.join(app.instance_path, 'database.sqlite3'),
+    )
+    # ensuring that instance folder exists
+    
+    if test_config is None:
+        # load the instance config, if it exists, when not testing
+        app.config.from_pyfile('config.py', silent=True)
+    else:
+        # load the test config if passed in
+        app.config.from_mapping(test_config)
 
 
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        print('instace path already exists')
+        pass
 
-#def create_app(test_config=None):
-app = Flask(__name__, instance_relative_config=True)
-socketio = SocketIO(app)
-# ensuring that instance folder exists
-try:
-    os.makedirs(app.instance_path)
-except OSError:
-    print('instace path already exists')
-    pass
+    #setting the app for db functions ind db.py 
+    from . import db
+    db.set_app(app)
 
-@app.route('/')
-def index_endpoint():
-    return render_template("index.html")
+    @app.route('/')
+    def index():
+        return render_template('index.html') 
 
-@app.route('/send', methods=('POST',))
-def parse_chats():
-    data_received = request.get_json()
-    print(data_received)
-    data_to_send = {
-        "title": "SUCCESSFULL :D",
-        "body": "Message was sucessfully sended",
-    }
-    return jsonify(data_to_send)
-
-# Socket IO
-
-
-
-@socketio.on('connect')
-def user_connected():
-    print('user connnected')
-
-@socketio.on('disconnect')
-def user_disconnect():
-    print('Client disconnected')
-
-@socketio.on('message')
-def receive_chat(message):
-    print('message: ' + message)
-    emit('response', {'message': message, 'other Person': 'other'}, broadcast=True)
-
-
-
-
-#setting the app for db functions ind db.py 
-db.set_app(app)
-sqlscripts.set_app(app)
-
-#return socketio, app
-
-if __name__ == '__main__':
-    socketio.run(app)
+    from . import sockets
+    socket.init_app(app)
+    return app

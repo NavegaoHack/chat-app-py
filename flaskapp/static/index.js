@@ -15,39 +15,18 @@ const sendMessage = (e) => {
     thisIsMyMessage = true
     console.log(message)
     if (message) {
-        socket.emit('message', message)
+        socket.emit('chat-message', message)
     }
-    /*
-    fetch('/endpoints', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-    },
-        body: JSON.stringify({
-            user: "userA",
-            chatMessage: message,
-        }),
-    }).then(response => response.json())
-    .then(data => console.log(data))
-    */
 }
 
 
-socket.on('connect', () => {
-    console.log("conectado con el servidor")
-})
-
-socket.on('disconnect', () => {
-    console.log("desconectado temporalmente")
-})
-
-socket.on('response', (msg) => {
+socket.on('broadcast-message', (msg) => {
 
   console.log(msg)
 
   messageComponent = document.createElement('DIV')
   messageComponent.className = thisIsMyMessage ? "--right" : "--left"
-  messageComponent.innerHTML = `<div class="chat-message --userA"><p>${msg.message}</p></div>`
+  messageComponent.innerHTML = `<div class="chat-message --userA"><p>${msg}</p></div>`
 
   chatWindow.appendChild(messageComponent)
   thisIsMyMessage = false
