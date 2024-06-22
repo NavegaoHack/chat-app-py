@@ -1,0 +1,6 @@
+__pycache__/
+chatenv/
+instance/
+*.jpg
+*.txt
+*.csv

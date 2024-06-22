@@ -1,0 +1,25 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS chats;
+
+CREATE TABLE users (
+  id VARCHAR(36) PRIMARY KEY,
+  username TEXT UNIQUE NOT NULL,
+  password VARCHAR(162) NOT NULL
+);
+
+CREATE TABLE chats (
+  id VARCHAR(36) UNIQUE PRIMARY KEY,
+  chat_id VARCHAR(36) NOT NULL,
+  user_id VARCHAR(36) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+CREATE TABLE messages (
+  id VARCHAR(36) UNIQUE PRIMARY KEY,
+  author_id VARCHAR(36) NOT NULL,
+  message TEXT NOT NULL,
+  chat_id VARCHAR(36) NOT NULL,
+  FOREIGN KEY (author_id) REFERENCES users (id),
+  FOREIGN KEY (chat_id) REFERENCES chats (chat_id)
+);

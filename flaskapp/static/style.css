@@ -1,0 +1,99 @@
+:root {
+    color-scheme: light-dark;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body, h1, h2, p {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.chat {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    place-content: center;
+    position: relative;
+}
+.chat-menu{
+    height: 100vh;
+    width: 5rem;
+    background-color: #dddcdc;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.chat-form {
+    width: 40rem;
+    height: 50rem;
+    border: 1px solid black;
+    display: grid;
+    grid-template-rows: 1fr 4rem;
+}
+
+.chat-window {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-y: scroll;
+}
+
+.chat-message {
+    max-width: 30rem;
+    display: inline-block;
+    padding: 0.8rem;
+    overflow-wrap: break-word;    
+    background-color: #30588a;
+}
+
+.--left {
+    align-self: flex-start;
+
+}
+.--right {
+    align-self: flex-end;
+
+}
+
+.chat-message p {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.chat-controls {
+    width: 100%;
+    height: 4rem;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.chat-controls input {
+    padding: 0.5rem 1.5rem;
+    height: 4rem;
+    font-size: 1.5rem;
+}
+
+.chat-controls button {
+    text-transform: uppercase;
+}
+
+.--userA {
+    background-color: #30588a;
+}
+
+.--userB {
+    background-color: #9e3f2c;
+}
+
+.--userC {
+    background-color: #177630;
+}
