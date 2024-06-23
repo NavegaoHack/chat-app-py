@@ -9,7 +9,18 @@
 </head>
 <body>
     <div class="chat">
-        <aside class="chat-menu"></aside>
+        <!-- Sidebar menu where chats and menus are stored -->
+        <aside class="chat-menu">
+            <div class="chat-menu__chats">
+                <h2>chats</h2>
+                <div class="chat-menu__chat-contact"><p>M</p></div>
+                <div class="chat-menu__chat-contact"><p>J</p></div>
+                <div class="chat-menu__chat-contact"><p>F</p></div>
+            </div>
+            <div class="chat-menu__user-opts">
+                <div class="logout"><p>⏼</p></div>
+            </div>
+        </aside>
         <form action="" class="chat-form">
             <div class="chat-window">
                 <!--<div class="--right">
@@ -22,8 +33,11 @@
             </div>
         </form>
     </div>
-    
+
+
+    <!-- Importing Socket.IO -->    
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
-    <script src="static/index.js"></script>
+    <!-- Importing My Script as a module for modularize -->    
+    <script type="module" src="static/index.js"></script>
 </body>
 </html>
