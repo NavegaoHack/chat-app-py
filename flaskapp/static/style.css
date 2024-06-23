@@ -81,19 +81,27 @@ body, h1, h2, p {
     color: white;
 }
 
+/* CHAT */
+
 .chat-form {
     width: 40rem;
-    height: 50rem;
+    height: calc(100vh - 10rem);
     border: 1px solid black;
+    border-radius: 2rem;
     display: grid;
     grid-template-rows: 1fr 4rem;
+    background-color: #f9f6f6;
+    overflow-y: hidden;
+
 }
 
 .chat-window {
     padding: 0.5rem;
     display: flex;
     flex-direction: column;
+    justify-content: end;
     gap: 0.5rem;
+    border: none;
     overflow-y: scroll;
 }
 
@@ -103,6 +111,7 @@ body, h1, h2, p {
     padding: 0.8rem;
     overflow-wrap: break-word;    
     background-color: #30588a;
+    border-radius: 1.5rem;
 }
 
 .--left {
@@ -114,7 +123,45 @@ body, h1, h2, p {
 
 }
 
-.chat-message p {
+.chat-message__time-user {
+    margin-bottom: 0.5rem;
+    color: white;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: space-between;
+    height: 1.5rem;
+}
+
+.chat-message__time-user p {
+    display: inline-block;
+}
+
+.--t-right {
+    flex-direction: row-reverse;
+}
+.--t-left {
+    flex-direction: row;
+}
+
+.chat-message__time-user div {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: white;
+    color: #30588a;
+    text-align: center;
+    line-height: 1.5rem;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    border-radius: 50%;
+}
+
+.chat-message__inner {
+    background-color: #4071ad;
+    padding: 0.5rem;
+    border-radius: 1rem;
+}
+
+.chat-message__inner p {
     font-size: 1.5rem;
     color: white;
 }
@@ -130,10 +177,14 @@ body, h1, h2, p {
     padding: 0.5rem 1.5rem;
     height: 4rem;
     font-size: 1.5rem;
+    border: none;
+    outline: none;
 }
 
 .chat-controls button {
     text-transform: uppercase;
+    outline: none;
+    border: none;
 }
 
 .--userA {
