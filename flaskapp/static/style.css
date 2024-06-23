@@ -86,22 +86,22 @@ body, h1, h2, p {
 .chat-form {
     width: 40rem;
     height: calc(100vh - 10rem);
-    border: 1px solid black;
     border-radius: 2rem;
     display: grid;
     grid-template-rows: 1fr 4rem;
     background-color: #f9f6f6;
-    overflow-y: hidden;
+    overflow: hidden;
+    box-shadow: 0 0 2rem #9b9b9b;
 
 }
 
 .chat-window {
     padding: 0.5rem;
     display: flex;
-    flex-direction: column;
-    justify-content: end;
+    flex-direction: column-reverse;
     gap: 0.5rem;
     border: none;
+    overscroll-behavior: contain;
     overflow-y: scroll;
 }
 
@@ -185,6 +185,12 @@ body, h1, h2, p {
     text-transform: uppercase;
     outline: none;
     border: none;
+    transition: all .1s;
+}
+
+.chat-controls button:active {
+    background-color: #30588a;
+    color: white;
 }
 
 .--userA {

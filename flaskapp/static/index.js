@@ -22,6 +22,11 @@ const sendMessage = (e) => {
         socket.emit('chat-message', message)
     }
 }
+
+const autoScroolToDown = () => {
+  console.log(chatWindow.scrollTop)
+}
+
 /*
                 <div class="--left">
                     <div class="chat-message --userA">
@@ -35,6 +40,7 @@ const sendMessage = (e) => {
 
 socket.on('broadcast-message', (msg) => {
 
+  autoScroolToDown()
 
   console.log(msg)
   const messageComponent = document.createElement('DIV')
@@ -50,8 +56,7 @@ socket.on('broadcast-message', (msg) => {
       </div>
   </div>
   `
-
-  chatWindow.appendChild(messageComponent)
+  chatWindow.prepend(messageComponent)
   thisIsMyMessage = false
 })
 
