@@ -9,17 +9,16 @@ CREATE TABLE users (
 );
 
 CREATE TABLE chats (
-  id VARCHAR(36) UNIQUE PRIMARY KEY,
   chat_id VARCHAR(36) NOT NULL,
   user_id VARCHAR(36) NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE messages (
-  id VARCHAR(36) UNIQUE PRIMARY KEY,
   author_id VARCHAR(36) NOT NULL,
   message TEXT NOT NULL,
   chat_id VARCHAR(36) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
   FOREIGN KEY (author_id) REFERENCES users (id),
   FOREIGN KEY (chat_id) REFERENCES chats (chat_id)
 );
