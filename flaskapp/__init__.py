@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request,jsonify, render_template
+from flask import Flask, render_template
 from flask_socketio import SocketIO, emit 
 
 socket = SocketIO()
@@ -11,6 +11,7 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'database.sqlite3'),
     )
+    app.debug = True
     # ensuring that instance folder exists
     
     if test_config is None:
@@ -31,9 +32,13 @@ def create_app(test_config=None):
     from . import db
     db.set_app(app)
 
+    #setting the app for db functions ind db.py 
+    from . import queries
+    app.register_blueprint(queries.bp_auth)
+
     @app.route('/')
     def index():
-        return render_template('index.html') 
+        return render_template('index.html')
 
     from . import sockets
     socket.init_app(app)

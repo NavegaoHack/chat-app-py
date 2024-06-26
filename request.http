@@ -1,0 +1,31 @@
+POST http://localhost:5000/api/users/register
+Content-Type: application/x-www-form-urlencoded
+
+username=Lapuente
+&password=5678
+
+###
+
+GET http://localhost:5000/api/users/login
+Content-Type: application/x-www-form-urlencoded
+
+username=juanito
+&password=tresde
+
+###
+
+GET http://localhost:5000/api/users/logout
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+GET http://localhost:5000/api/users/delete
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+POST http://localhost:5000/api/users/update-passw
+Content-Type: application/x-www-form-urlencoded
+
+username=juanito
+&new-password=tresde

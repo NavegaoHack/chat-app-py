@@ -1,7 +1,14 @@
 import sqlite3
-
 import click
-from flask import current_app, g
+from uuid import uuid1
+from werkzeug.security import check_password_hash, generate_password_hash
+from flask import current_app, g, session
+
+
+def check_fields(user, passw):
+    return not (user and passw)
+        
+
 
 # Stol EHEM copied from flask tutorial guide
 def get_db():
@@ -25,6 +32,86 @@ def init_db():
 
     with current_app.open_resource('database-schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
+
+# USERS QUERIES
+
+def new_user(username, password):
+    if check_fields(username, password): 
+        return f"all fields are needed",400
+    
+    db = get_db()
+
+    try:
+        db.execute(
+            "INSERT INTO users VALUES (?, ?, ?)",
+            (str(uuid1()), username, generate_password_hash(password)),
+        )
+        db.commit()
+    except db.IntegrityError:
+        return f"User {username} is already registered.", 404
+
+    return f"{username} has inserted correctly", 200
+
+def del_user():
+    db = get_db()
+
+    try:
+        db.execute(
+            "DELETE FROM users WHERE id = ?",(session['user_id'],),
+        )
+        db.commit()
+    except db.IntegrityError:
+        return f"An error has ocurred on deletion", 404
+
+    username = session['username']
+    session.clear()
+    return f"{username} has deleted sucessfully", 200
+
+def log_user(username, password):
+    if check_fields(username, password): 
+        return f"all fields are needed",400
+    
+    db = get_db()
+ 
+    error = None
+    user = db.execute(
+        'select * from users where username = ?', (username,)
+    ).fetchone()
+
+    if user is None:
+        return 'Incorrect username.', 404
+    elif not check_password_hash(user['password'], password):
+        return 'Incorrect password.', 404
+
+    if error is None:
+        session.clear()
+        session['user_id'] = user['id']
+        session['username'] = user['username']
+        return f"{username} logged sucessfully",200
+
+def restore_passw(user, newpassw):
+    if not user: return f"a username are required", 401
+    if not newpassw: return f"a new password are required, none data has changed", 401
+
+    db = get_db()
+
+    try:
+        db.execute(
+            "UPDATE users SET password = ? WHERE username = ?", (generate_password_hash(newpassw), user,)
+        )
+        db.commit()
+    except db.IntegrityError:
+        return f"An error has ocurred on updating", 404
+    return f"{user} has updated sucessfully", 200
+
+
+def log_out():
+    username = session['username']
+    session.clear()
+    return f"{username} logout sucessfully",200
+
+
+# CHAT QUERIES
 
 
 @click.command('initialize-db')
