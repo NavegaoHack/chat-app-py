@@ -16,6 +16,9 @@ body, h1, h2, p {
     font-family: "Varela Round", sans-serif;
     font-weight: 400;
     font-style: normal;
+    font-weight: bold;
+
+    
 }
 
 body { /*set the background image*/

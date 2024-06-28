@@ -54,7 +54,7 @@ const printMessages = (messageList) => {
 }
 
 const getUsers = async () => {
-    const response = await fetch('http://localhost:5000/api/users/get-users-list', {
+    const response = await fetch('http://192.168.0.116:5000/api/users/get-users-list', {
         method: 'GET',
         headers: {
             "content-type": "application/json"
@@ -66,7 +66,7 @@ const getUsers = async () => {
 }
 
 const getPreviousMessages = async () => {
-    const response = await fetch('http://localhost:5000/api/users/get-previous-messages', {
+    const response = await fetch('http://192.168.0.116:5000/api/users/get-previous-messages', {
         method: 'GET',
         headers: {
             "content-type": "application/json"
