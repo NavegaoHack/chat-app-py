@@ -1,12 +1,15 @@
 import os
 from flask import Flask, render_template
-from flask_socketio import SocketIO, emit 
+from flask_socketio import SocketIO, emit
+from flask_cors import CORS
 
 socket = SocketIO()
 
 def create_app(test_config=None):
     #configuring the app
     app = Flask(__name__, instance_relative_config=True)
+    # support cors for all domains
+    CORS(app)
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'database.sqlite3'),

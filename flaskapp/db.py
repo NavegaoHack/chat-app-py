@@ -111,6 +111,72 @@ def log_out():
     return f"{username} logout sucessfully",200
 
 
+def get_u_list():
+    db = get_db()
+ 
+    query = db.execute(
+        'SELECT id, username FROM users'
+    ).fetchall()
+
+    user_list = []
+    for row in query:
+        d = {
+            "username": row['username'],
+            "id": row['id'],
+        }
+        user_list.append(d)
+
+    return user_list, 200
+
+def previous_messages(id):
+    db = get_db()
+    print(id)
+ 
+    query = db.execute(
+        'SELECT username, message, created_at FROM messages INNER JOIN users ON users.id = messages.author_id WHERE chat_id = ? ORDER BY created_at', (id,)
+    ).fetchall()
+
+    message_list = []
+    for row in query:
+        d = {
+            "username": row['username'],
+            "message": row['message'],
+            "created_at": row['created_at'].strftime("%Y/%m/%d, %H:%M:%S")
+        }
+        message_list.append(d)
+
+    return message_list, 200
+
+def select_last_message():
+    db = get_db()
+
+    query = db.execute(
+        'SELECT username, message, created_at FROM messages INNER JOIN users ON users.id = messages.author_id ORDER BY created_at DESC LIMIT 1'
+    ).fetchone()
+
+    d = {
+        "username": query['username'],
+        "message": query['message'],
+        "created_at": query['created_at'].strftime("%Y/%m/%d, %H:%M:%S")
+    }
+
+    return d
+
+
+def insert_new_message(author_id, msg, chat_id):
+    db = get_db()
+
+    try:
+        db.execute(
+            "INSERT INTO messages(author_id, message, chat_id) VALUES (?, ?, ?)", (author_id, msg, chat_id)
+        )
+        db.commit()
+    except db.IntegrityError:
+        return None
+    
+    return select_last_message() 
+
+
 # CHAT QUERIES
 
 

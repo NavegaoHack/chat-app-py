@@ -36,6 +36,8 @@ body, h1, h2, p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    user-select: none;
+
 }
 
 .chat-menu h2 {
@@ -51,6 +53,7 @@ body, h1, h2, p {
     background-color: #30588a;
     text-align: center;
     line-height: 3rem;
+    cursor: pointer;
 }
 
 .chat-menu__chat-contact p {
@@ -203,4 +206,7 @@ body, h1, h2, p {
 
 .--userC {
     background-color: #177630;
+}
+.--connected {
+    opacity: .6;
 }

@@ -1,5 +1,6 @@
-from flaskapp.db import new_user, log_user, log_out, del_user, restore_passw
+from flaskapp.db import new_user, log_user, log_out, del_user, restore_passw, get_u_list, previous_messages, insert_new_message
 from flask import Blueprint, request, Response
+from json import dumps
 
 bp_auth = Blueprint('auth', __name__, url_prefix='/api/users')
 
@@ -44,11 +45,21 @@ def update_user():
         
         return Response(message, status_code)
 
+@bp_auth.route('/get-users-list', methods=['GET'])
+def get_user_list():
+    user_list, status_code = get_u_list()
 
-bp_messages = Blueprint('messages', __name__, url_prefix='/api/messages')
+    return Response(dumps(user_list), status_code, mimetype='application/json')
 
-@bp_messages.route('/get-previous-messages', methods=['GET'])
-def register_message():
-    #messages, status_code = get_prev_messages()
-    pass
-        
+@bp_auth.route('/get-previous-messages', methods=['GET'])
+def get_previous_messages():
+    #req = request.json
+    #chat_id = req['chat-id']
+    messages, status_code = previous_messages(1)
+    
+    return Response(dumps(messages), status_code, mimetype='application/json')
+
+def store_message(author_id, message, chat_id):
+    broadcast_response = insert_new_message(author_id, message, chat_id)
+
+    return broadcast_response

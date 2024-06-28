@@ -29,3 +29,18 @@ Content-Type: application/x-www-form-urlencoded
 
 username=juanito
 &new-password=tresde
+
+###
+
+GET http://localhost:5000/api/users/get-users-list
+Content-Type: application/json
+
+###
+
+POST http://localhost:5000/api/users/get-previous-messages
+Content-Type: application/json
+
+{
+    "chat-id": 1
+}
+
