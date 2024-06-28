@@ -1,34 +1,54 @@
 :root {
-    color-scheme: light-dark;
+    color-scheme: light-dark; /* Set the color scheme for light and dark mode */
 }
 
 html {
-    box-sizing: border-box;
-    font-size: 62.5%;
+    box-sizing: border-box; /* Ensure that padding and borders are included in the element's total width and height */
+    font-size: 62.5%; /* Set the base font size to 62.5% (10px) for easier rem unit calculations */
 }
 *, *::before, *::after {
-    box-sizing: inherit;
+    box-sizing: inherit; /* Inherit box-sizing property from the parent element */
 }
 
 body, h1, h2, p {
-    margin: 0;
-    font-family: sans-serif;
+    margin: 0; /* Remove default margin for body, h1, h2, p elements */
+    font-family: sans-serif; /* Set the font family for body, h1, h2, p elements to sans-serif */
+    font-family: "Varela Round", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body { /*set the background image*/
+    background-image:url(../static/img/vector.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.dark-mode form { /*dark mode (WIP)*/
+    background-color: rgb(39, 39, 39);
+    
+}
+
+.dark-mode .chat-menu { /*dark mode (WIP)*/
+    background-color: rgb(33, 33, 33);
+    color: white;
 }
 
 .chat {
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    place-content: center;
-    position: relative;
+    
+    width: 100vw; /* Set the width of the chat container to 100% of the viewport width */
+    height: 100vh; /* Set the height of the chat container to 100% of the viewport height */
+    display: grid; /* Use CSS Grid for layout */
+    place-content: center; /* Center the content horizontally and vertically */
+    position: relative; /* Set the position to relative */
 }
 
 /* SIDEBAR */
 
-.chat-menu{
+.chat-menu{  /* Styling for the chat menu sidebar */
     height: 100vh;
     width: 8rem;
-    background-color: #dddcdc;
+    background-color: #7171719b;
     position: absolute;
     top: 0;
     left: 0;
@@ -36,41 +56,61 @@ body, h1, h2, p {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    user-select: none;
-
 }
 
-.chat-menu h2 {
+/* Media query for responsive design */
+@media screen and (max-width: 400px) {
+    .chat-menu {
+        display: none; /* Hide the sidebar on screens less than 400px wide */
+    }
+    
+}
+
+/* Styling for chat menu headings */
+.chat-menu h2 { 
+    /* Styling for the heading in the chat menu */
+    color: aliceblue;
     text-align: center;
     margin-bottom: 1rem;
 }
 
+/* Styling for chat contact circles */
 .chat-menu__chat-contact {
+    /* Styling for chat contact circles */
     width: 3rem;
     height: 3rem;
     margin: 0.5rem 1.5rem;
     border-radius: 50%;
-    background-color: #30588a;
+    background-color: #78BCB9;
     text-align: center;
     line-height: 3rem;
-    cursor: pointer;
+    user-select: none;
 }
 
+/* Styling for initials in the chat contacts */
 .chat-menu__chat-contact p {
+    /* Styling for initials in the chat contacts */
     color: white;
     font-size: 1.5rem;
+    font-family: system-ui, sans-serif;
+    font-weight: bold;
 }
 
+/* Styling for user options in the sidebar */
 .chat-menu__user-opts {
+    /* Styling for user options in the sidebar */
     width: 4rem;
     height: 12rem;
     margin: 1rem 1rem;
     border-radius: 1rem;
-    background-color: rgb(176, 176, 176);
+    background-color: rgb(143, 143, 143);
     display: flex;
     flex-direction: column-reverse;
 }
+
+/* Styling for the logout icon */
 .chat-menu__user-opts .logout {
+    /* Styling for the logout icon */
     width: 3.5rem;
     height: 3.5rem;
     margin: 0.5rem 0.25rem;
@@ -79,26 +119,47 @@ body, h1, h2, p {
     text-align: center;
     line-height: 3.5rem;
 }
+
+/* Styling for the text inside the logout icon */
 .chat-menu__user-opts .logout p {
+    /* Styling for the text inside the logout icon */
     font-size: 2.5rem;
     color: white;
 }
 
-/* CHAT */
+/* CHAT FORM STYLES */
 
 .chat-form {
+    /* Styling for the chat form */
     width: 40rem;
     height: calc(100vh - 10rem);
-    border-radius: 2rem;
+    border-radius: 10px;
     display: grid;
     grid-template-rows: 1fr 4rem;
-    background-color: #f9f6f6;
+    background-color: #f9f6f6f6;
     overflow: hidden;
-    box-shadow: 0 0 2rem #9b9b9b;
+    box-shadow: 0 0 10px #9b9b9b;
 
 }
 
+/* Media queries for responsive design */
+@media screen and (max-width: 400px) {
+    .chat-form {
+        /* Adjust styling for screens less than 400px wide */
+        width: 35rem;
+    }
+}
+@media screen and (max-width: 250px) {
+    .chat-form {
+        /* Adjust styling for screens less than 250px wide */
+        width: 15rem;
+        grid-template-rows: 1fr 6rem;
+    }
+}
+
+/* Styling for the chat window */
 .chat-window {
+    /* Styling for the chat window */
     padding: 0.5rem;
     display: flex;
     flex-direction: column-reverse;
@@ -108,7 +169,17 @@ body, h1, h2, p {
     overflow-y: scroll;
 }
 
+/* Media query for chat window on smaller screens */
+@media screen and (max-width: 250px) {
+    .chat-window {
+        /* Adjust styling for screens less than 250px wide */
+        width: 15rem;
+    }
+}
+
+/* Styling for chat messages */
 .chat-message {
+    /* Styling for chat messages */
     max-width: 30rem;
     display: inline-block;
     padding: 0.8rem;
@@ -117,16 +188,28 @@ body, h1, h2, p {
     border-radius: 1.5rem;
 }
 
+/* Media query for chat messages on smaller screens */
+@media screen and (max-width: 250px) { 
+    .chat-message {
+        /* Adjust styling for screens less than 250px wide */
+        max-width: 15rem;
+    }
+}
+
 .--left {
+    /* Styling for left-aligned chat messages */
     align-self: flex-start;
 
 }
 .--right {
+    /* Styling for right-aligned chat messages */
     align-self: flex-end;
 
 }
 
+/* Styling for message timestamp and user info */
 .chat-message__time-user {
+    /* Styling for message timestamp and user info */
     margin-bottom: 0.5rem;
     color: white;
     font-size: 1.3rem;
@@ -135,18 +218,21 @@ body, h1, h2, p {
     height: 1.5rem;
 }
 
+/* Styling for paragraph elements within message timestamp/user info */
 .chat-message__time-user p {
+    /* Styling for paragraph elements within message timestamp/user info */
     display: inline-block;
 }
 
 .--t-right {
-    flex-direction: row-reverse;
+    flex-direction: row-reverse; /* Set the flex direction to row-reverse for elements with the class "--t-right" */
 }
 .--t-left {
-    flex-direction: row;
+    flex-direction: row; /* Set the flex direction to row for elements with the class "--t-left" */
 }
 
 .chat-message__time-user div {
+    /* Styling for the time-user div within chat messages */
     width: 1.5rem;
     height: 1.5rem;
     background-color: white;
@@ -159,24 +245,46 @@ body, h1, h2, p {
 }
 
 .chat-message__inner {
-    background-color: #4071ad;
+    /* Styling for the inner content of chat messages */
+    background-color: #78bcb9;
     padding: 0.5rem;
     border-radius: 1rem;
 }
 
 .chat-message__inner p {
+    /* Styling for paragraph elements within the chat message inner content */
     font-size: 1.5rem;
     color: white;
 }
 
 .chat-controls {
+    /* Styling for the chat controls section */
     width: 100%;
     height: 4rem;
     display: grid;
     grid-template-columns: 3fr 1fr;
 }
+@media screen and (max-width: 240px) {
+    .chat-controls {
+        /* Adjust styling for screens less than 240px wide */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-controls button {
+        /* Adjust styling for buttons within chat controls on smaller screens */
+        display: block;
+        height: 4rem;
+        width: 80%;
+    }
+    .chat-controls input {
+        /* Adjust styling for input fields within chat controls on smaller screens */
+        width: 15rem;
+    }
+}
 
 .chat-controls input {
+    /* Styling for input fields within chat controls */
     padding: 0.5rem 1.5rem;
     height: 4rem;
     font-size: 1.5rem;
@@ -185,6 +293,7 @@ body, h1, h2, p {
 }
 
 .chat-controls button {
+    /* Styling for buttons within chat controls */
     text-transform: uppercase;
     outline: none;
     border: none;
@@ -192,21 +301,36 @@ body, h1, h2, p {
 }
 
 .chat-controls button:active {
+    /* Styling for active state of buttons within chat controls */
     background-color: #30588a;
     color: white;
 }
 
+.submit {
+    /* Styling for the submit button */
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 3px solid gray;
+    background-color: #78bcb9;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
 .--userA {
-    background-color: #30588a;
+    /* Styling for elements with the class "--userA" */
+    background-color: #428f8b;
 }
 
 .--userB {
+    /* Styling for elements with the class "--userB" */
     background-color: #9e3f2c;
 }
 
 .--userC {
+    /* Styling for elements with the class "--userC" */
     background-color: #177630;
 }
+
 .--connected {
     opacity: .6;
 }

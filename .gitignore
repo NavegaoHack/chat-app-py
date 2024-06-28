@@ -1,16 +1,10 @@
 __pycache__/
 chatenv/
-instance/
-*.jpg
-*.txt
-*.csv
 
 .venv/
 
 *.pyc
 __pycache__/
-
-instance/
 
 .pytest_cache/
 .coverage
